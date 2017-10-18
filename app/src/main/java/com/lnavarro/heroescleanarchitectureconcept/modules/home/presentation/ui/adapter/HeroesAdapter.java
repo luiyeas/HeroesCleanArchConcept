@@ -20,17 +20,17 @@ import java.util.ArrayList;
  * Created by luis on 17/10/17.
  */
 
-public class HeroesGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HeroesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
     private ArrayList<Heroe> mData;
     private HeroesListener mClickListener;
 
     public interface HeroesListener {
-        void onHeroeSelected(Heroe heroe);
+        void onHeroeSelected(Heroe heroe, ImageView image);
     }
 
-    public HeroesGridAdapter(Context context, ArrayList<Heroe> data) {
+    public HeroesAdapter(Context context, ArrayList<Heroe> data) {
         this.mContext = context;
         this.mData = data;
     }
@@ -41,14 +41,14 @@ public class HeroesGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         RecyclerView.ViewHolder viewHolder;
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_grid_heroes, parent, false);
-        viewHolder = new HeroesGridAdapter.HeroesViewHolder(v);
+        viewHolder = new HeroesAdapter.HeroesViewHolder(v);
 
         return viewHolder;
 
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         final Heroe heroe = mData.get(position);
 
         Picasso.with(mContext)
@@ -64,7 +64,7 @@ public class HeroesGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             @Override
             public void onClick(View v) {
                 if (mClickListener != null) {
-                    mClickListener.onHeroeSelected(heroe);
+                    mClickListener.onHeroeSelected(heroe, ((HeroesViewHolder) holder).image);
                 }
             }
         });

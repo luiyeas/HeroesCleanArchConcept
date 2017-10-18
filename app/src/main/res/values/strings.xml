@@ -3,5 +3,12 @@
     <string name="generic_error_text">Han error has ocurred</string>
     <string name="splash_subtitle_text">A Clean Architecture Concept</string>
     <string name="home_activity_title">Heroes</string>
+    <string name="data_sheet_text">Data Sheet</string>
+    <string name="groups_text">Groups</string>
+    <string name="power_text">Power:</string>
+    <string name="height_text">Height:</string>
+    <string name="real_name_text">Real name:</string>
+    <string name="ability_text">Ability:</string>
+
 
 </resources>

@@ -2,9 +2,16 @@ package com.lnavarro.heroescleanarchitectureconcept.common.presentation.navigato
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.widget.ImageView;
 
 import com.lnavarro.heroescleanarchitectureconcept.R;
+import com.lnavarro.heroescleanarchitectureconcept.modules.heroes.domain.model.Heroe;
+import com.lnavarro.heroescleanarchitectureconcept.modules.heroes.presentation.ui.activity.HeroeDetailActivity;
 import com.lnavarro.heroescleanarchitectureconcept.modules.home.presentation.ui.activity.HomeActivity;
+
+import static com.lnavarro.heroescleanarchitectureconcept.modules.heroes.presentation.ui.activity.HeroeDetailActivity.HEROE_EXTRA;
 
 /**
  * Created by luis on 17/10/17.
@@ -21,4 +28,13 @@ public class Navigator {
         }
     }
 
+    public static void navigateToHeroeDetailActivity(Activity activity, Heroe heroe, ImageView imageView) {
+        if (activity != null) {
+            Intent intent = new Intent(activity, HeroeDetailActivity.class);
+            intent.putExtra(HEROE_EXTRA, heroe);
+
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, imageView, HEROE_EXTRA);
+            ActivityCompat.startActivity(activity, intent, options.toBundle());
+        }
+    }
 }

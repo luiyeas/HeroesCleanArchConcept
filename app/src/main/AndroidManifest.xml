@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".modules.home.presentation.ui.activity.HomeActivity" />
+        <activity android:name=".modules.heroes.presentation.ui.activity.HeroeDetailActivity" />
     </application>
 
 </manifest>

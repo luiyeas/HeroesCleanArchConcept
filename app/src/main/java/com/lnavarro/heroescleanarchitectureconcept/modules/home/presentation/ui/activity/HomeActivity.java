@@ -5,12 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
 
 import com.lnavarro.heroescleanarchitectureconcept.R;
 import com.lnavarro.heroescleanarchitectureconcept.modules.heroes.domain.model.Heroe;
 import com.lnavarro.heroescleanarchitectureconcept.modules.home.presentation.presenter.HomePresenter;
 import com.lnavarro.heroescleanarchitectureconcept.modules.home.presentation.presenter.implementation.HomePresenterImpl;
-import com.lnavarro.heroescleanarchitectureconcept.modules.home.presentation.ui.adapter.HeroesGridAdapter;
+import com.lnavarro.heroescleanarchitectureconcept.modules.home.presentation.ui.adapter.HeroesAdapter;
 
 import java.util.ArrayList;
 
@@ -28,7 +29,7 @@ public class HomeActivity extends AppCompatActivity implements HomePresenter.Vie
     Unbinder mUnbinder;
 
     private HomePresenterImpl mPresenter;
-    private HeroesGridAdapter mAdapter;
+    private HeroesAdapter mAdapter;
 
     @BindView(R.id.recyclerview)
     RecyclerView mRecyclerView;
@@ -42,7 +43,7 @@ public class HomeActivity extends AppCompatActivity implements HomePresenter.Vie
 
         mUnbinder = ButterKnife.bind(this);
 
-        mPresenter = new HomePresenterImpl(null, null, this, this);
+        mPresenter = new HomePresenterImpl(null, null, this, this, this);
         mPresenter.create();
     }
 
@@ -61,13 +62,13 @@ public class HomeActivity extends AppCompatActivity implements HomePresenter.Vie
 
         LinearLayoutManager llManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
-        mAdapter = new HeroesGridAdapter(this, listHeroes);
+        mAdapter = new HeroesAdapter(this, listHeroes);
         mRecyclerView.setLayoutManager(llManager);
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(new HeroesGridAdapter.HeroesListener() {
+        mAdapter.setOnItemClickListener(new HeroesAdapter.HeroesListener() {
             @Override
-            public void onHeroeSelected(Heroe heroe) {
-                mPresenter.onHeroeSelected(heroe);
+            public void onHeroeSelected(Heroe heroe, ImageView image) {
+                mPresenter.onHeroeSelected(heroe, image);
             }
         });
     }

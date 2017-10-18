@@ -20,7 +20,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/mid_normal_padding"
+            android:layout_marginLeft="@dimen/normal_padding"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
