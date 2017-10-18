@@ -1,4 +1,4 @@
-package com.lnavarro.heroescleanarchitectureconcept.modules.common.domain.interactor;
+package com.lnavarro.heroescleanarchitectureconcept.common.domain.interactor;
 
 
 import android.content.Context;

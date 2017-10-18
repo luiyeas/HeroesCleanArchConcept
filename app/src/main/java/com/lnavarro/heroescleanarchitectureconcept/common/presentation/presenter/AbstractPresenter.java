@@ -1,4 +1,4 @@
-package com.lnavarro.heroescleanarchitectureconcept.modules.common.presentation.presenter;
+package com.lnavarro.heroescleanarchitectureconcept.common.presentation.presenter;
 
 import android.content.Context;
 

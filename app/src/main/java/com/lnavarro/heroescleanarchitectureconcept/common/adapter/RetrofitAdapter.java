@@ -1,9 +1,9 @@
-package com.lnavarro.heroescleanarchitectureconcept.modules.common.adapter;
+package com.lnavarro.heroescleanarchitectureconcept.common.adapter;
 
 
 import android.content.Context;
 import com.google.gson.GsonBuilder;
-import com.lnavarro.heroescleanarchitectureconcept.modules.common.domain.model.Api;
+import com.lnavarro.heroescleanarchitectureconcept.common.domain.model.Api;
 
 import java.lang.reflect.Modifier;
 import java.util.concurrent.TimeUnit;
