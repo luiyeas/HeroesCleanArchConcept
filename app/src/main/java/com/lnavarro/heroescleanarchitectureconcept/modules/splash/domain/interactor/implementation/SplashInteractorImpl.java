@@ -58,7 +58,6 @@ public class SplashInteractorImpl extends AbstractInteractor implements SplashIn
                 .requestHeroes()
                 .subscribeOn(this.mSubscriberOn)
                 .observeOn(this.mObserveOn)
-                .delay(2, TimeUnit.SECONDS)
                 .subscribe(new Subscriber<Response<HeoresResponse>>() {
                     @Override
                     public void onCompleted() {

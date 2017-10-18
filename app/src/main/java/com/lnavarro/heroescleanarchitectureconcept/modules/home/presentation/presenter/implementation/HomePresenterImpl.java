@@ -3,6 +3,7 @@ package com.lnavarro.heroescleanarchitectureconcept.modules.home.presentation.pr
 import android.content.Context;
 
 import com.lnavarro.heroescleanarchitectureconcept.common.presentation.presenter.AbstractPresenter;
+import com.lnavarro.heroescleanarchitectureconcept.modules.heroes.domain.model.Heroe;
 import com.lnavarro.heroescleanarchitectureconcept.modules.home.domain.interactor.implementation.HomeInteractorImpl;
 import com.lnavarro.heroescleanarchitectureconcept.modules.home.presentation.presenter.HomePresenter;
 
@@ -59,4 +60,6 @@ public class HomePresenterImpl extends AbstractPresenter implements HomePresente
 
     }
 
+    public void onHeroeSelected(Heroe heroe) {
+    }
 }

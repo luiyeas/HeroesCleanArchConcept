@@ -2,7 +2,6 @@ package com.lnavarro.heroescleanarchitectureconcept.modules.home.presentation.ui
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -60,8 +59,16 @@ public class HomeActivity extends AppCompatActivity implements HomePresenter.Vie
         mToolbar.setTitle(getString(R.string.home_activity_title));
         setSupportActionBar(mToolbar);
 
+        LinearLayoutManager llManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+
         mAdapter = new HeroesGridAdapter(this, listHeroes);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.setLayoutManager(llManager);
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new HeroesGridAdapter.HeroesListener() {
+            @Override
+            public void onHeroeSelected(Heroe heroe) {
+                mPresenter.onHeroeSelected(heroe);
+            }
+        });
     }
 }

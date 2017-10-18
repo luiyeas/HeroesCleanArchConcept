@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">HeroesCleanArchitectureConcept</string>
-
     <string name="generic_error_text">Han error has ocurred</string>
+    <string name="splash_subtitle_text">A Clean Architecture Concept</string>
     <string name="home_activity_title">Heroes</string>
+
 </resources>

@@ -2,7 +2,22 @@
 <resources>
 
     <!-- SPLASH -->
-    <dimen name="logo_size">116sp</dimen>
+    <dimen name="logo_size">54sp</dimen>
+    <dimen name="logo_subtitle_size">20sp</dimen>
 
+    <!-- PADDINGS -->
+    <dimen name="mid_normal_padding">16dp</dimen>
+    <dimen name="normal_padding">16dp</dimen>
+
+    <!-- IMAGES -->
+    <dimen name="heroe_image_size">56dp</dimen>
+
+    <!-- TEXT SIZES -->
+    <dimen name="default_text_size">16sp</dimen>
+    <dimen name="default_text_subtitle_size">14sp</dimen>
+
+    <!-- VIEWS -->
+    <dimen name="recycler_view_heroes_padding_left">104dp</dimen>
+    <dimen name="height_recyler_view_separator">1dp</dimen>
 
 </resources>
