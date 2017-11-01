@@ -9,10 +9,13 @@ import com.lnavarro.heroescleanarchitectureconcept.domain.model.server.HeoresRes
 import com.lnavarro.heroescleanarchitectureconcept.data.repository.HeroesRepository;
 import com.lnavarro.heroescleanarchitectureconcept.domain.interactor.splash.SplashInteractor;
 
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
-import rx.Scheduler;
-import rx.Subscriber;
-import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by luis on 17/10/17.
@@ -20,16 +23,16 @@ import rx.subscriptions.CompositeSubscription;
 
 public class SplashInteractorImpl extends AbstractInteractor implements SplashInteractor {
 
-    private CompositeSubscription mCompositeSubcription;
     private Handler mHandler;
     private SplashInteractor.Callback mCallback;
+    private CompositeDisposable mCompositeDisposable;
 
-    public SplashInteractorImpl(Scheduler observeOn, Scheduler subscribeOn, Context context, SplashInteractor.Callback callback) {
-        super(observeOn, subscribeOn, context);
+    public SplashInteractorImpl(Context context, SplashInteractor.Callback callback) {
+        super(context);
 
-        this.mCompositeSubcription = new CompositeSubscription();
         this.mHandler = new Handler(Looper.getMainLooper());
         this.mCallback = callback;
+        this.mCompositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -44,33 +47,23 @@ public class SplashInteractorImpl extends AbstractInteractor implements SplashIn
 
     @Override
     public void destroy() {
-        clearComposite();
+        mCompositeDisposable.clear();
         mHandler = null;
     }
 
     private void requestHeroes() {
-
-        clearComposite();
-
-        mCompositeSubcription.add(HeroesRepository.getInstance(mContext)
-                .requestHeroes()
-                .subscribeOn(this.mSubscriberOn)
-                .observeOn(this.mObserveOn)
-                .subscribe(new Subscriber<Response<HeoresResponse>>() {
+        mCompositeDisposable.add(HeroesRepository.getInstance(mContext)
+                .getService()
+                .getHeroes()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Response<HeoresResponse>>() {
                     @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        onNext(null);
-                    }
-
-                    public void onNext(Response<HeoresResponse> response) {
-                        clearComposite();
-                        processResponse(response);
+                    public void accept(@NonNull Response<HeoresResponse> heoresResponseResponse) throws Exception {
+                        processResponse(heoresResponseResponse);
                     }
                 }));
+
     }
 
     private void processResponse(Response<HeoresResponse> response) {
@@ -101,12 +94,6 @@ public class SplashInteractorImpl extends AbstractInteractor implements SplashIn
                     mCallback.onHeroesSuccessfull();
                 }
             });
-        }
-    }
-
-    private void clearComposite() {
-        if (mCompositeSubcription != null && mCompositeSubcription.hasSubscriptions()) {
-            mCompositeSubcription.clear();
         }
     }
 }

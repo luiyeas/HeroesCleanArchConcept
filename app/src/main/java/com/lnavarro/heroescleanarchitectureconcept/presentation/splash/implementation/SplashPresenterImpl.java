@@ -11,7 +11,6 @@ import com.lnavarro.heroescleanarchitectureconcept.domain.interactor.splash.Spla
 import com.lnavarro.heroescleanarchitectureconcept.domain.interactor.splash.implementation.SplashInteractorImpl;
 import com.lnavarro.heroescleanarchitectureconcept.presentation.splash.SplashPresenter;
 
-import rx.Scheduler;
 
 /**
  * Created by luis on 17/10/17.
@@ -22,11 +21,11 @@ public class SplashPresenterImpl extends AbstractPresenter implements SplashPres
     private SplashInteractorImpl mInteractor;
     private Activity mActivity;
 
-    public SplashPresenterImpl(Scheduler observeOn, Scheduler susbscribeOn, Context context, Activity activity) {
-        super(observeOn, susbscribeOn, context);
+    public SplashPresenterImpl(Context context, Activity activity) {
+        super(context);
 
         this.mActivity = activity;
-        this.mInteractor = new SplashInteractorImpl(observeOn, susbscribeOn, context, this);
+        this.mInteractor = new SplashInteractorImpl(context, this);
     }
 
     @Override

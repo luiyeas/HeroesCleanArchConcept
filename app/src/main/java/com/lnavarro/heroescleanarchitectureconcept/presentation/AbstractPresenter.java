@@ -2,20 +2,17 @@ package com.lnavarro.heroescleanarchitectureconcept.presentation;
 
 import android.content.Context;
 
-import rx.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by pedro on 13/2/17.
  */
 public abstract class AbstractPresenter {
 
-    protected Scheduler mObserveOn;
-    protected Scheduler mSubscriveOn;
     protected Context mContext;
 
-    public AbstractPresenter(Scheduler observeOn, Scheduler susbscribeOn, Context context) {
-        mObserveOn = observeOn;
-        mSubscriveOn = susbscribeOn;
+    public AbstractPresenter(Context context) {
         mContext = context;
     }
 

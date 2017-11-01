@@ -74,7 +74,7 @@ public class HeroeDetailActivity extends AppCompatActivity implements HeroeDetai
         ViewCompat.setTransitionName(mAppbarLayout, HEROE_EXTRA);
         supportPostponeEnterTransition();
 
-        mPresenter = new HeroeDetailPresenterImpl(null, null, this, this, (Heroe) getIntent().getExtras().getParcelable(HEROE_EXTRA));
+        mPresenter = new HeroeDetailPresenterImpl(this, this, (Heroe) getIntent().getExtras().getParcelable(HEROE_EXTRA));
         mPresenter.create();
 
     }

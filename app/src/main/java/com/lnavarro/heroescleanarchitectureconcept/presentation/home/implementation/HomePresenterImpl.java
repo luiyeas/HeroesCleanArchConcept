@@ -10,7 +10,9 @@ import com.lnavarro.heroescleanarchitectureconcept.domain.model.Heroe;
 import com.lnavarro.heroescleanarchitectureconcept.domain.interactor.home.implementation.HomeInteractorImpl;
 import com.lnavarro.heroescleanarchitectureconcept.presentation.home.HomePresenter;
 
-import rx.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by luis on 17/10/17.
@@ -22,10 +24,10 @@ public class HomePresenterImpl extends AbstractPresenter implements HomePresente
     private HomePresenter.View mView;
     private Activity mActivity;
 
-    public HomePresenterImpl(Scheduler observeOn, Scheduler susbscribeOn, Context context, HomePresenter.View view, Activity activity) {
-        super(observeOn, susbscribeOn, context);
+    public HomePresenterImpl(Context context, HomePresenter.View view, Activity activity) {
+        super(context);
 
-        this.mInteractor = new HomeInteractorImpl(observeOn, susbscribeOn, context);
+        this.mInteractor = new HomeInteractorImpl(context);
         this.mView = view;
         this.mActivity = activity;
     }

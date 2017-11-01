@@ -6,8 +6,6 @@ import android.os.Bundle;
 import com.lnavarro.heroescleanarchitectureconcept.R;
 import com.lnavarro.heroescleanarchitectureconcept.presentation.splash.implementation.SplashPresenterImpl;
 
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -18,7 +16,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        mPresenter = new SplashPresenterImpl(AndroidSchedulers.mainThread(), Schedulers.io(), this, this);
+        mPresenter = new SplashPresenterImpl(this, this);
         mPresenter.create();
     }
 

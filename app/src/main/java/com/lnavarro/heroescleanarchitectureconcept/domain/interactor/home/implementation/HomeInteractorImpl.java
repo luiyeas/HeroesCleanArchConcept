@@ -9,7 +9,9 @@ import com.lnavarro.heroescleanarchitectureconcept.domain.interactor.home.HomeIn
 
 import java.util.ArrayList;
 
-import rx.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by luis on 17/10/17.
@@ -17,8 +19,8 @@ import rx.Scheduler;
 
 public class HomeInteractorImpl extends AbstractInteractor implements HomeInteractor {
 
-    public HomeInteractorImpl(Scheduler observeOn, Scheduler subscribeOn, Context context) {
-        super(observeOn, subscribeOn, context);
+    public HomeInteractorImpl(Context context) {
+        super(context);
     }
 
     @Override

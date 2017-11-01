@@ -43,7 +43,7 @@ public class HomeActivity extends AppCompatActivity implements HomePresenter.Vie
 
         mUnbinder = ButterKnife.bind(this);
 
-        mPresenter = new HomePresenterImpl(null, null, this, this, this);
+        mPresenter = new HomePresenterImpl(this, this, this);
         mPresenter.create();
     }
 

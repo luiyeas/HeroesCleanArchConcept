@@ -1,6 +1,7 @@
 package com.lnavarro.heroescleanarchitectureconcept.data.repository;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.lnavarro.heroescleanarchitectureconcept.domain.rest.RetrofitAdapter;
 import com.lnavarro.heroescleanarchitectureconcept.domain.Api;
@@ -9,12 +10,11 @@ import com.lnavarro.heroescleanarchitectureconcept.domain.model.server.HeoresRes
 
 import java.util.ArrayList;
 
+import io.reactivex.Single;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
-import rx.Observable;
-import rx.Subscriber;
 
 /**
  * Created by luis on 17/10/17.
@@ -25,7 +25,10 @@ public class HeroesRepository {
 
     private static HeroesRepository sInstance = null;
     private Context mContext = null;
+
+    @NonNull
     private HeroesRepositoryService service;
+
     private ArrayList<Heroe> mListHeroes;
 
     public static HeroesRepository getInstance(Context ctx) {
@@ -49,47 +52,11 @@ public class HeroesRepository {
         return this.service;
     }
 
-    interface HeroesRepositoryService {
+    public interface HeroesRepositoryService {
         @Headers({"Accept: application/json"})
         @GET(Api.ENDPOINT.HEROES)
-        Observable<Response<HeoresResponse>> getHeroes();
+        Single<Response<HeoresResponse>> getHeroes();
     }
-
-
-    public Observable<Response<HeoresResponse>> requestHeroes() {
-
-        return Observable.create(new Observable.OnSubscribe<Response<HeoresResponse>>() {
-            @Override
-            public void call(final Subscriber<? super Response<HeoresResponse>> subscriber) {
-
-                Observable observable = getService().getHeroes();
-                if (observable != null) {
-                    observable.subscribe(new Subscriber<Response<HeoresResponse>>() {
-                        @Override
-                        public void onCompleted() {
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            subscriber.onNext(null);
-                        }
-
-                        @Override
-                        public void onNext(Response<HeoresResponse> response) {
-                            if (response != null) {
-                                subscriber.onNext(response);
-                            } else {
-                                subscriber.onError(null);
-                            }
-                        }
-                    });
-                } else {
-                    subscriber.onError(null);
-                }
-            }
-        });
-    }
-
 
     public void setHeroes(ArrayList<Heroe> listHeroes) {
         this.mListHeroes = listHeroes;
