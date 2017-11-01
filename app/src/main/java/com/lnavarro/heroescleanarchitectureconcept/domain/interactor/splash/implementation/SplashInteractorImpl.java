@@ -1,9 +1,8 @@
 package com.lnavarro.heroescleanarchitectureconcept.domain.interactor.splash.implementation;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
 
+import com.lnavarro.heroescleanarchitectureconcept.domain.executor.MainThreadExecutor;
 import com.lnavarro.heroescleanarchitectureconcept.domain.interactor.AbstractInteractor;
 import com.lnavarro.heroescleanarchitectureconcept.domain.model.server.HeoresResponse;
 import com.lnavarro.heroescleanarchitectureconcept.data.repository.HeroesRepository;
@@ -23,15 +22,16 @@ import retrofit2.Response;
 
 public class SplashInteractorImpl extends AbstractInteractor implements SplashInteractor {
 
-    private Handler mHandler;
     private SplashInteractor.Callback mCallback;
     private CompositeDisposable mCompositeDisposable;
+    private HeroesRepository mHeroesRepository;
+    private MainThreadExecutor mMainThreadExecutor;
 
-    public SplashInteractorImpl(Context context) {
+    public SplashInteractorImpl(Context context, HeroesRepository repository, MainThreadExecutor mainThreadExecutor, CompositeDisposable compositeDisposable) {
         super(context);
-
-        this.mHandler = new Handler(Looper.getMainLooper());
-        this.mCompositeDisposable = new CompositeDisposable();
+        this.mCompositeDisposable = compositeDisposable;
+        this.mHeroesRepository = repository;
+        this.mMainThreadExecutor = mainThreadExecutor;
     }
 
     @Override
@@ -41,41 +41,37 @@ public class SplashInteractorImpl extends AbstractInteractor implements SplashIn
 
     @Override
     public void removeCallbacks() {
-
+        this.mCallback = null;
     }
 
     @Override
     public void destroy() {
         mCompositeDisposable.clear();
-        mHandler = null;
     }
 
     public void addCallback(SplashInteractor.Callback callback) {
         this.mCallback = callback;
     }
 
-    public void removeCallback(){
-        this.mCallback = null;
-    }
-
     private void requestHeroes() {
-        mCompositeDisposable.add(HeroesRepository.getInstance(mContext)
-                .getService()
-                .getHeroes()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Response<HeoresResponse>>() {
-                    @Override
-                    public void accept(@NonNull Response<HeoresResponse> heoresResponseResponse) throws Exception {
-                        processResponse(heoresResponseResponse);
-                    }
-                }));
+        mCompositeDisposable.add(
+                mHeroesRepository
+                        .getService()
+                        .getHeroes()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<Response<HeoresResponse>>() {
+                            @Override
+                            public void accept(@NonNull Response<HeoresResponse> heoresResponseResponse) throws Exception {
+                                processResponse(heoresResponseResponse);
+                            }
+                        }));
 
     }
 
     private void processResponse(Response<HeoresResponse> response) {
         if (response != null && response.body() != null && response.body().getSuperheroes() != null) {
-            HeroesRepository.getInstance(mContext).setHeroes(response.body().getSuperheroes());
+            mHeroesRepository.setHeroes(response.body().getSuperheroes());
             postHeroesReceived();
         } else {
             postError();
@@ -83,8 +79,8 @@ public class SplashInteractorImpl extends AbstractInteractor implements SplashIn
     }
 
     private void postError() {
-        if (mHandler != null && mCallback != null) {
-            mHandler.post(new Runnable() {
+        if (mMainThreadExecutor.getHandler() != null && mCallback != null) {
+            mMainThreadExecutor.getHandler().post(new Runnable() {
                 @Override
                 public void run() {
                     mCallback.onHeroesError();
@@ -94,8 +90,8 @@ public class SplashInteractorImpl extends AbstractInteractor implements SplashIn
     }
 
     private void postHeroesReceived() {
-        if (mHandler != null && mCallback != null) {
-            mHandler.post(new Runnable() {
+        if (mMainThreadExecutor.getHandler() != null && mCallback != null) {
+            mMainThreadExecutor.getHandler().post(new Runnable() {
                 @Override
                 public void run() {
                     mCallback.onHeroesSuccessfull();

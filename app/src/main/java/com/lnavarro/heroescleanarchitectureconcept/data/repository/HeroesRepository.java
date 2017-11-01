@@ -7,12 +7,9 @@ import com.lnavarro.heroescleanarchitectureconcept.domain.rest.RetrofitAdapter;
 import com.lnavarro.heroescleanarchitectureconcept.domain.Api;
 import com.lnavarro.heroescleanarchitectureconcept.domain.model.Heroe;
 import com.lnavarro.heroescleanarchitectureconcept.domain.model.server.HeoresResponse;
-
 import java.util.ArrayList;
-
 import io.reactivex.Single;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 
@@ -22,30 +19,13 @@ import retrofit2.http.Headers;
 
 public class HeroesRepository {
 
-
-    private static HeroesRepository sInstance = null;
-    private Context mContext = null;
-
     @NonNull
     private HeroesRepositoryService service;
 
     private ArrayList<Heroe> mListHeroes;
 
-    public static HeroesRepository getInstance(Context ctx) {
-        if (sInstance == null) {
-            sInstance = new HeroesRepository();
-            sInstance.mContext = ctx;
-            sInstance.init();
-        }
-        return sInstance;
-    }
-
-    private void init() {
-    }
-
-    private HeroesRepository() {
-        Retrofit retrofit = RetrofitAdapter.getInstance(mContext).getAdapter();
-        this.service = retrofit.create(HeroesRepositoryService.class);
+    public HeroesRepository(Context context, RetrofitAdapter rAdapter) {
+        this.service = rAdapter.getAdapter().create(HeroesRepositoryService.class);
     }
 
     public HeroesRepositoryService getService() {

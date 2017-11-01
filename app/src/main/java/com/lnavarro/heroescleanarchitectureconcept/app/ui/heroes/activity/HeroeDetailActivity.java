@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,12 +17,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lnavarro.heroescleanarchitectureconcept.R;
+import com.lnavarro.heroescleanarchitectureconcept.app.ui.GenericActivity;
 import com.lnavarro.heroescleanarchitectureconcept.domain.model.Heroe;
-import com.lnavarro.heroescleanarchitectureconcept.presentation.heroes.HeroeDetailPresenter;
-import com.lnavarro.heroescleanarchitectureconcept.presentation.heroes.implementation.HeroeDetailPresenterImpl;
+import com.lnavarro.heroescleanarchitectureconcept.presentation.Presenter;
+import com.lnavarro.heroescleanarchitectureconcept.presentation.heroes.HeroeDetailPresenterImpl;
 import com.lnavarro.heroescleanarchitectureconcept.app.ui.heroes.adapter.ChipGroupAdapter;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,14 +35,16 @@ import butterknife.Unbinder;
  * Created by luis on 18/10/17.
  */
 
-public class HeroeDetailActivity extends AppCompatActivity implements HeroeDetailPresenter.View {
+public class HeroeDetailActivity extends GenericActivity {
 
     public static final String HEROE_EXTRA = "heroe_extra";
 
     Unbinder mUnbinder;
 
-    private HeroeDetailPresenterImpl mPresenter;
+    @Inject
+    HeroeDetailPresenterImpl mPresenter;
     private ChipGroupAdapter mChipAdapter;
+    private Heroe mHeroe;
 
 
     @BindView(R.id.toolbar)
@@ -74,9 +78,13 @@ public class HeroeDetailActivity extends AppCompatActivity implements HeroeDetai
         ViewCompat.setTransitionName(mAppbarLayout, HEROE_EXTRA);
         supportPostponeEnterTransition();
 
-        mPresenter = new HeroeDetailPresenterImpl(this, this, (Heroe) getIntent().getExtras().getParcelable(HEROE_EXTRA));
+        mHeroe = getHeroeFromExtra();
         mPresenter.create();
+    }
 
+    @Override
+    protected Presenter bindPresenter() {
+        return mPresenter;
     }
 
     @Override
@@ -99,14 +107,23 @@ public class HeroeDetailActivity extends AppCompatActivity implements HeroeDetai
     }
 
     @Override
-    public void configureView(Heroe heroe) {
+    public void onBackPressed() {
+        mPresenter.onBackPressed();
+    }
+
+    private Heroe getHeroeFromExtra() {
+        return getIntent().getExtras().getParcelable(HEROE_EXTRA);
+    }
+
+    public void configureView() {
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mCollapsingToolbarLayout.setTitle(heroe.getName());
+        mCollapsingToolbarLayout.setTitle(mHeroe.getName());
 
-        Picasso.with(this).load(heroe.getPhoto()).into(mImageToolbar, new Callback() {
-            @Override public void onSuccess() {
+        Picasso.with(this).load(mHeroe.getPhoto()).into(mImageToolbar, new Callback() {
+            @Override
+            public void onSuccess() {
                 Bitmap bitmap = ((BitmapDrawable) mImageToolbar.getDrawable()).getBitmap();
                 Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
                     public void onGenerated(Palette palette) {
@@ -115,18 +132,19 @@ public class HeroeDetailActivity extends AppCompatActivity implements HeroeDetai
                 });
             }
 
-            @Override public void onError() {
+            @Override
+            public void onError() {
 
             }
         });
 
-        mRealNameTextView.setText(heroe.getRealName());
-        mHeightTextView.setText(heroe.getHeight());
-        mPowerTextView.setText(heroe.getPower());
-        mAbitiltTextView.setText(heroe.getAbilities());
+        mRealNameTextView.setText(mHeroe.getRealName());
+        mHeightTextView.setText(mHeroe.getHeight());
+        mPowerTextView.setText(mHeroe.getPower());
+        mAbitiltTextView.setText(mHeroe.getAbilities());
 
         // Configure chips
-        String[] listGroups = heroe.getGroups().split(",");
+        String[] listGroups = mHeroe.getGroups().split(",");
         mChipAdapter = new ChipGroupAdapter(listGroups);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mRecyclerView.setAdapter(mChipAdapter);

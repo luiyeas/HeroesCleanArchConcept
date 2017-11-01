@@ -2,6 +2,7 @@ package com.lnavarro.heroescleanarchitectureconcept.domain.rest;
 
 
 import android.content.Context;
+
 import com.google.gson.GsonBuilder;
 import com.lnavarro.heroescleanarchitectureconcept.domain.Api;
 
@@ -17,19 +18,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitAdapter {
 
-    private static RetrofitAdapter sInstance = null;
     public Retrofit retrofit;
 
-    public RetrofitAdapter() {
-        super();
-    }
-
-    public static RetrofitAdapter getInstance(Context context) {
-        if (sInstance == null) {
-            sInstance = new RetrofitAdapter();
-            sInstance.init(context);
-        }
-        return sInstance;
+    public RetrofitAdapter(Context context) {
+        init(context);
     }
 
     private void init(Context context) {
@@ -46,7 +38,6 @@ public class RetrofitAdapter {
     public Retrofit getAdapter() {
         return this.retrofit;
     }
-
 
     private OkHttpClient provideOkHTTPClient(final Context context) {
 

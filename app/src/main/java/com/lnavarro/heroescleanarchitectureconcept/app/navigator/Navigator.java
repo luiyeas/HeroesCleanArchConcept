@@ -47,4 +47,15 @@ public class Navigator {
             ActivityCompat.startActivity(mActivity, intent, options.toBundle());
         }
     }
+
+    public void navigateBackToListDetail() {
+        if (mActivity != null) {
+            finishCurrentActivity();
+        }
+    }
+
+    private void finishCurrentActivity() {
+        mActivity.finish();
+    }
+
 }

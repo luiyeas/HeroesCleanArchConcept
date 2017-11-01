@@ -34,7 +34,7 @@ public class SplashPresenterImpl extends Presenter<SplashActivity> implements Sp
     }
 
     public void destroy() {
-        mInteractor.removeCallback();
+        mInteractor.removeCallbacks();
         mInteractor.destroy();
     }
 

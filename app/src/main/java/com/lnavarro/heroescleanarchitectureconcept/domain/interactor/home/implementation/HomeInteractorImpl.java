@@ -19,8 +19,11 @@ import io.reactivex.schedulers.Schedulers;
 
 public class HomeInteractorImpl extends AbstractInteractor implements HomeInteractor {
 
-    public HomeInteractorImpl(Context context) {
+    private HeroesRepository mHeroeRepository;
+
+    public HomeInteractorImpl(Context context, HeroesRepository heroesRepository) {
         super(context);
+        this.mHeroeRepository = heroesRepository;
     }
 
     @Override
@@ -39,6 +42,6 @@ public class HomeInteractorImpl extends AbstractInteractor implements HomeIntera
     }
 
     public ArrayList<Heroe> getHeroes(){
-        return HeroesRepository.getInstance(mContext).getHeroes();
+        return mHeroeRepository.getHeroes();
     }
 }

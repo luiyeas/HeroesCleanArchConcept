@@ -1,6 +1,5 @@
 package com.lnavarro.heroescleanarchitectureconcept.presentation.home;
 
-import android.app.Activity;
 import android.content.Context;
 import android.widget.ImageView;
 
@@ -9,8 +8,6 @@ import com.lnavarro.heroescleanarchitectureconcept.app.ui.home.activity.HomeActi
 import com.lnavarro.heroescleanarchitectureconcept.presentation.Presenter;
 import com.lnavarro.heroescleanarchitectureconcept.domain.model.Heroe;
 import com.lnavarro.heroescleanarchitectureconcept.domain.interactor.home.implementation.HomeInteractorImpl;
-
-import java.util.ArrayList;
 
 
 /**

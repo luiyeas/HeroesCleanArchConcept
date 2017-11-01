@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import com.lnavarro.heroescleanarchitectureconcept.R;
 import com.lnavarro.heroescleanarchitectureconcept.app.ui.GenericActivity;
-import com.lnavarro.heroescleanarchitectureconcept.app.ui.View;
 import com.lnavarro.heroescleanarchitectureconcept.presentation.Presenter;
 import com.lnavarro.heroescleanarchitectureconcept.presentation.splash.SplashPresenterImpl;
 

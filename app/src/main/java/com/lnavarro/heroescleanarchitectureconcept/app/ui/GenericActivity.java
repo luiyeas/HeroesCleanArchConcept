@@ -25,13 +25,15 @@ public abstract class GenericActivity extends AppCompatActivity implements View 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injectDependencies();
-        initNavigator();
-
         presenter = bindPresenter();
         presenter.setView(this);
-
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initNavigator();
+    }
 
     private void injectDependencies() {
         ((HeroesApplication) getApplication()).inject(this);
