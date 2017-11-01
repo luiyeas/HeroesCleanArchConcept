@@ -3,8 +3,8 @@ package com.lnavarro.heroescleanarchitectureconcept.app.base;
 import android.app.Application;
 
 import com.lnavarro.heroescleanarchitectureconcept.app.di.RootModule;
-
-import dagger.ObjectGraph;
+import com.lnavarro.heroescleanarchitectureconcept.app.di.component.DaggerRootComponent;
+import com.lnavarro.heroescleanarchitectureconcept.app.di.component.RootComponent;
 
 /**
  * Created by luis on 1/11/17.
@@ -12,17 +12,19 @@ import dagger.ObjectGraph;
 
 public class HeroesApplication extends Application {
 
-    private ObjectGraph objectGraph;
+    private RootComponent mainComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
-
-        objectGraph = ObjectGraph.create(new RootModule(this));
-        objectGraph.inject(this);
+        initializeInjector();
     }
 
-    public void inject(Object className) {
-        objectGraph.inject(className);
+    private void initializeInjector() {
+        mainComponent = DaggerRootComponent.builder().rootModule(new RootModule(this)).build();
+    }
+
+    public RootComponent getMainComponent() {
+        return mainComponent;
     }
 }

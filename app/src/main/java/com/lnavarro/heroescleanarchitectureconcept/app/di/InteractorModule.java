@@ -15,9 +15,7 @@ import io.reactivex.disposables.CompositeDisposable;
  * Created by luis on 1/11/17.
  */
 
-@Module(
-        complete = false,
-        library = true)
+@Module
 public class InteractorModule {
 
     @Provides

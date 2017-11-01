@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lnavarro.heroescleanarchitectureconcept.R;
+import com.lnavarro.heroescleanarchitectureconcept.app.base.HeroesApplication;
 import com.lnavarro.heroescleanarchitectureconcept.app.ui.GenericActivity;
 import com.lnavarro.heroescleanarchitectureconcept.domain.model.Heroe;
 import com.lnavarro.heroescleanarchitectureconcept.presentation.Presenter;
@@ -35,7 +36,7 @@ import butterknife.Unbinder;
  * Created by luis on 18/10/17.
  */
 
-public class HeroeDetailActivity extends GenericActivity {
+public class HeroeDetailActivity extends GenericActivity implements HeroeDetailPresenterImpl.View{
 
     public static final String HEROE_EXTRA = "heroe_extra";
 
@@ -74,18 +75,18 @@ public class HeroeDetailActivity extends GenericActivity {
 
         mUnbinder = ButterKnife.bind(this);
 
+        initializeDagger();
         initActivityTransitions();
         ViewCompat.setTransitionName(mAppbarLayout, HEROE_EXTRA);
         supportPostponeEnterTransition();
+        initializePresenter();
 
         mHeroe = getHeroeFromExtra();
         mPresenter.create();
     }
 
-    @Override
-    protected Presenter bindPresenter() {
-        return mPresenter;
-    }
+
+
 
     @Override
     protected void onDestroy() {
@@ -93,6 +94,15 @@ public class HeroeDetailActivity extends GenericActivity {
 
         mPresenter.destroy();
         mUnbinder.unbind();
+    }
+
+    private void initializeDagger() {
+        HeroesApplication app = (HeroesApplication) getApplication();
+        app.getMainComponent().inject(this);
+    }
+
+    private void initializePresenter() {
+        mPresenter.setView(this);
     }
 
     @Override

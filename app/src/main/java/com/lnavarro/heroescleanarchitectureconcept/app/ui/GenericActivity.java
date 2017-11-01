@@ -14,20 +14,17 @@ import javax.inject.Inject;
  * Created by luis on 1/11/17.
  */
 
-public abstract class GenericActivity extends AppCompatActivity implements View {
+public abstract class GenericActivity extends AppCompatActivity {
 
     @Inject
     protected Navigator navigator;
-    private Presenter presenter;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        injectDependencies();
-        presenter = bindPresenter();
-        presenter.setView(this);
     }
+
 
     @Override
     protected void onResume() {
@@ -35,14 +32,8 @@ public abstract class GenericActivity extends AppCompatActivity implements View 
         initNavigator();
     }
 
-    private void injectDependencies() {
-        ((HeroesApplication) getApplication()).inject(this);
-    }
-
     private void initNavigator() {
         navigator.setActivity(this);
     }
-
-    protected abstract Presenter bindPresenter();
 
 }

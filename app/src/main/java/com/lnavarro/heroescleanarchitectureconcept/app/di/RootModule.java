@@ -4,17 +4,9 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.lnavarro.heroescleanarchitectureconcept.app.base.HeroesApplication;
 import com.lnavarro.heroescleanarchitectureconcept.app.navigator.Navigator;
-import com.lnavarro.heroescleanarchitectureconcept.app.ui.GenericActivity;
-import com.lnavarro.heroescleanarchitectureconcept.app.ui.heroes.activity.HeroeDetailActivity;
-import com.lnavarro.heroescleanarchitectureconcept.app.ui.home.activity.HomeActivity;
-import com.lnavarro.heroescleanarchitectureconcept.app.ui.splash.activity.SplashActivity;
 import com.lnavarro.heroescleanarchitectureconcept.domain.executor.MainThreadExecutor;
 import com.lnavarro.heroescleanarchitectureconcept.domain.rest.RetrofitAdapter;
-import com.lnavarro.heroescleanarchitectureconcept.presentation.heroes.HeroeDetailPresenterImpl;
-import com.lnavarro.heroescleanarchitectureconcept.presentation.home.HomePresenterImpl;
-import com.lnavarro.heroescleanarchitectureconcept.presentation.splash.SplashPresenterImpl;
 
 import javax.inject.Singleton;
 
@@ -25,22 +17,7 @@ import io.reactivex.disposables.CompositeDisposable;
 /**
  * Created by luis on 1/11/17.
  */
-@Module(
-        includes = {
-                PresenterModule.class,
-                InteractorModule.class,
-                RepositoryModule.class},
-        injects = {
-                HeroesApplication.class,
-                GenericActivity.class,
-                SplashActivity.class,
-                SplashPresenterImpl.class,
-                HomeActivity.class,
-                HomePresenterImpl.class,
-                HeroeDetailActivity.class,
-                HeroeDetailPresenterImpl.class},
-        library = true)
-
+@Module
 public class RootModule {
 
     private final Context mContext;

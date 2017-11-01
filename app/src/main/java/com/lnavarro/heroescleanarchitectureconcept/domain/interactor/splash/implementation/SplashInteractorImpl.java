@@ -9,6 +9,8 @@ import com.lnavarro.heroescleanarchitectureconcept.data.repository.HeroesReposit
 import com.lnavarro.heroescleanarchitectureconcept.domain.interactor.splash.SplashInteractor;
 
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
@@ -27,6 +29,7 @@ public class SplashInteractorImpl extends AbstractInteractor implements SplashIn
     private HeroesRepository mHeroesRepository;
     private MainThreadExecutor mMainThreadExecutor;
 
+    @Inject
     public SplashInteractorImpl(Context context, HeroesRepository repository, MainThreadExecutor mainThreadExecutor, CompositeDisposable compositeDisposable) {
         super(context);
         this.mCompositeDisposable = compositeDisposable;

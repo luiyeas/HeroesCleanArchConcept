@@ -9,6 +9,8 @@ import com.lnavarro.heroescleanarchitectureconcept.domain.interactor.home.HomeIn
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -21,6 +23,7 @@ public class HomeInteractorImpl extends AbstractInteractor implements HomeIntera
 
     private HeroesRepository mHeroeRepository;
 
+    @Inject
     public HomeInteractorImpl(Context context, HeroesRepository heroesRepository) {
         super(context);
         this.mHeroeRepository = heroesRepository;

@@ -10,17 +10,22 @@ import com.lnavarro.heroescleanarchitectureconcept.presentation.Presenter;
 import com.lnavarro.heroescleanarchitectureconcept.domain.interactor.splash.SplashInteractor;
 import com.lnavarro.heroescleanarchitectureconcept.domain.interactor.splash.implementation.SplashInteractorImpl;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
 
 /**
  * Created by luis on 17/10/17.
  */
 
-public class SplashPresenterImpl extends Presenter<SplashActivity> implements SplashInteractor.Callback {
+public class SplashPresenterImpl extends Presenter<SplashPresenterImpl.View> implements SplashInteractor.Callback {
 
     private Context mContext;
     private SplashInteractorImpl mInteractor;
     private Navigator mNavigator;
 
+    @Inject
     public SplashPresenterImpl(Context context, SplashInteractorImpl interactor, Navigator navigator) {
         super(context);
         this.mContext = context;
@@ -46,5 +51,9 @@ public class SplashPresenterImpl extends Presenter<SplashActivity> implements Sp
     @Override
     public void onHeroesError() {
         Toast.makeText(mContext, mContext.getString(R.string.generic_error_text), Toast.LENGTH_SHORT).show();
+    }
+
+    public interface View extends Presenter.View {
+
     }
 }

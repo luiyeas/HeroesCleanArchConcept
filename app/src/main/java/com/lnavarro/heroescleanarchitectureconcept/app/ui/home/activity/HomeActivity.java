@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 
 import com.lnavarro.heroescleanarchitectureconcept.R;
+import com.lnavarro.heroescleanarchitectureconcept.app.base.HeroesApplication;
 import com.lnavarro.heroescleanarchitectureconcept.app.ui.GenericActivity;
 import com.lnavarro.heroescleanarchitectureconcept.app.ui.View;
 import com.lnavarro.heroescleanarchitectureconcept.domain.model.Heroe;
@@ -28,7 +29,7 @@ import butterknife.Unbinder;
  * Created by luis on 17/10/17.
  */
 
-public class HomeActivity extends GenericActivity {
+public class HomeActivity extends GenericActivity implements HomePresenterImpl.View {
 
     Unbinder mUnbinder;
 
@@ -45,11 +46,14 @@ public class HomeActivity extends GenericActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        initializeDagger();
         setContentView(R.layout.activity_home);
+        initializePresenter();
         mUnbinder = ButterKnife.bind(this);
         mPresenter.create();
     }
+
+
 
     @Override
     protected void onDestroy() {
@@ -59,11 +63,17 @@ public class HomeActivity extends GenericActivity {
         mUnbinder.unbind();
     }
 
-    @Override
-    protected Presenter bindPresenter() {
-        return mPresenter;
+
+    private void initializeDagger() {
+        HeroesApplication app = (HeroesApplication) getApplication();
+        app.getMainComponent().inject(this);
     }
 
+    private void initializePresenter() {
+        mPresenter.setView(this);
+    }
+
+    @Override
     public void configureView(ArrayList<Heroe> listHeroes) {
         mToolbar.setTitle(getString(R.string.home_activity_title));
         setSupportActionBar(mToolbar);

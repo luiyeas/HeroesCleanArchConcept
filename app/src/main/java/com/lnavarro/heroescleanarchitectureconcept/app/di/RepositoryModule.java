@@ -13,16 +13,12 @@ import dagger.Provides;
 /**
  * Created by luis on 1/11/17.
  */
-
-@Module(
-        complete = false,
-        library = true)
+@Module
 public class RepositoryModule {
 
-    @Provides
     @Singleton
+    @Provides
     HeroesRepository provideHeroesRepository(Context context, RetrofitAdapter retrofitAdapter) {
         return new HeroesRepository(context, retrofitAdapter);
     }
-
 }

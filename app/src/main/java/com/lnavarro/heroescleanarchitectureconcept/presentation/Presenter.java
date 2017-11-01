@@ -10,7 +10,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Created by pedro on 13/2/17.
  */
-public abstract class Presenter<T extends View> {
+public abstract class Presenter<T extends Presenter.View> {
 
     protected Context mContext;
     protected T mView;
@@ -19,10 +19,13 @@ public abstract class Presenter<T extends View> {
         mContext = context;
     }
 
+    public T getView() {
+        return mView;
+    }
+
     public void setView(T view) {
         this.mView = view;
     }
-
     protected void onCreate() {
         // Empty
     }
@@ -37,6 +40,10 @@ public abstract class Presenter<T extends View> {
 
     protected void onDestroy() {
         // Empty
+    }
+
+    public interface View {
+
     }
 
 }

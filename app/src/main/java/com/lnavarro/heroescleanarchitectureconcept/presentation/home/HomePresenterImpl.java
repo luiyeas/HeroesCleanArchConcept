@@ -9,16 +9,22 @@ import com.lnavarro.heroescleanarchitectureconcept.presentation.Presenter;
 import com.lnavarro.heroescleanarchitectureconcept.domain.model.Heroe;
 import com.lnavarro.heroescleanarchitectureconcept.domain.interactor.home.implementation.HomeInteractorImpl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
 
 /**
  * Created by luis on 17/10/17.
  */
 
-public class HomePresenterImpl extends Presenter<HomeActivity> {
+public class HomePresenterImpl extends Presenter<HomePresenterImpl.View> {
 
     private HomeInteractorImpl mInteractor;
     private Navigator mNavigator;
 
+    @Inject
     public HomePresenterImpl(Context context, Navigator navigator, HomeInteractorImpl interactor) {
         super(context);
         this.mNavigator = navigator;
@@ -37,5 +43,10 @@ public class HomePresenterImpl extends Presenter<HomeActivity> {
         if (heroe != null) {
             mNavigator.navigateToHeroeDetailActivity(heroe, image);
         }
+    }
+
+
+    public interface View extends Presenter.View {
+        void configureView(ArrayList<Heroe> list);
     }
 }
