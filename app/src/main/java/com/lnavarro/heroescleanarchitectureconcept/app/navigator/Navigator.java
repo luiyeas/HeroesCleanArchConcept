@@ -19,22 +19,32 @@ import static com.lnavarro.heroescleanarchitectureconcept.app.ui.heroes.activity
 
 public class Navigator {
 
-    public static void navigateToHomeActivity(Activity activity) {
-        if (activity != null) {
-            Intent intent = new Intent(activity, HomeActivity.class);
-            activity.startActivity(intent);
-            activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-            activity.finish();
+    private Activity mActivity;
+
+    public Navigator() {
+
+    }
+
+    public void setActivity(Activity activity) {
+        this.mActivity = activity;
+    }
+
+    public void navigateToHomeActivity() {
+        if (mActivity != null) {
+            Intent intent = new Intent(mActivity, HomeActivity.class);
+            mActivity.startActivity(intent);
+            mActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            mActivity.finish();
         }
     }
 
-    public static void navigateToHeroeDetailActivity(Activity activity, Heroe heroe, ImageView imageView) {
-        if (activity != null) {
-            Intent intent = new Intent(activity, HeroeDetailActivity.class);
+    public void navigateToHeroeDetailActivity(Heroe heroe, ImageView imageView) {
+        if (mActivity != null) {
+            Intent intent = new Intent(mActivity, HeroeDetailActivity.class);
             intent.putExtra(HEROE_EXTRA, heroe);
 
-            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, imageView, HEROE_EXTRA);
-            ActivityCompat.startActivity(activity, intent, options.toBundle());
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity, imageView, HEROE_EXTRA);
+            ActivityCompat.startActivity(mActivity, intent, options.toBundle());
         }
     }
 }

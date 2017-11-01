@@ -27,11 +27,10 @@ public class SplashInteractorImpl extends AbstractInteractor implements SplashIn
     private SplashInteractor.Callback mCallback;
     private CompositeDisposable mCompositeDisposable;
 
-    public SplashInteractorImpl(Context context, SplashInteractor.Callback callback) {
+    public SplashInteractorImpl(Context context) {
         super(context);
 
         this.mHandler = new Handler(Looper.getMainLooper());
-        this.mCallback = callback;
         this.mCompositeDisposable = new CompositeDisposable();
     }
 
@@ -49,6 +48,14 @@ public class SplashInteractorImpl extends AbstractInteractor implements SplashIn
     public void destroy() {
         mCompositeDisposable.clear();
         mHandler = null;
+    }
+
+    public void addCallback(SplashInteractor.Callback callback) {
+        this.mCallback = callback;
+    }
+
+    public void removeCallback(){
+        this.mCallback = null;
     }
 
     private void requestHeroes() {

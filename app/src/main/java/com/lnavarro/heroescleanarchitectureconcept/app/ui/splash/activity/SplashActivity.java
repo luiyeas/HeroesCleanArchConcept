@@ -1,23 +1,31 @@
 package com.lnavarro.heroescleanarchitectureconcept.app.ui.splash.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.lnavarro.heroescleanarchitectureconcept.R;
-import com.lnavarro.heroescleanarchitectureconcept.presentation.splash.implementation.SplashPresenterImpl;
+import com.lnavarro.heroescleanarchitectureconcept.app.ui.GenericActivity;
+import com.lnavarro.heroescleanarchitectureconcept.app.ui.View;
+import com.lnavarro.heroescleanarchitectureconcept.presentation.Presenter;
+import com.lnavarro.heroescleanarchitectureconcept.presentation.splash.SplashPresenterImpl;
+
+import javax.inject.Inject;
 
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends GenericActivity {
 
-    private SplashPresenterImpl mPresenter;
+    @Inject
+    SplashPresenterImpl mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
-        mPresenter = new SplashPresenterImpl(this, this);
         mPresenter.create();
+    }
+
+    @Override
+    protected Presenter bindPresenter() {
+        return mPresenter;
     }
 
     @Override

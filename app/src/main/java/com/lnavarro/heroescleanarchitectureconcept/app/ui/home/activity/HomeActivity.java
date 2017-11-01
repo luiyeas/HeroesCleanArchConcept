@@ -8,12 +8,16 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 
 import com.lnavarro.heroescleanarchitectureconcept.R;
+import com.lnavarro.heroescleanarchitectureconcept.app.ui.GenericActivity;
+import com.lnavarro.heroescleanarchitectureconcept.app.ui.View;
 import com.lnavarro.heroescleanarchitectureconcept.domain.model.Heroe;
-import com.lnavarro.heroescleanarchitectureconcept.presentation.home.HomePresenter;
-import com.lnavarro.heroescleanarchitectureconcept.presentation.home.implementation.HomePresenterImpl;
+import com.lnavarro.heroescleanarchitectureconcept.presentation.Presenter;
+import com.lnavarro.heroescleanarchitectureconcept.presentation.home.HomePresenterImpl;
 import com.lnavarro.heroescleanarchitectureconcept.app.ui.heroes.adapter.HeroesAdapter;
 
 import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,11 +28,13 @@ import butterknife.Unbinder;
  * Created by luis on 17/10/17.
  */
 
-public class HomeActivity extends AppCompatActivity implements HomePresenter.View {
+public class HomeActivity extends GenericActivity {
 
     Unbinder mUnbinder;
 
-    private HomePresenterImpl mPresenter;
+    @Inject
+    HomePresenterImpl mPresenter;
+
     private HeroesAdapter mAdapter;
 
     @BindView(R.id.recyclerview)
@@ -39,11 +45,9 @@ public class HomeActivity extends AppCompatActivity implements HomePresenter.Vie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_home);
-
         mUnbinder = ButterKnife.bind(this);
-
-        mPresenter = new HomePresenterImpl(this, this, this);
         mPresenter.create();
     }
 
@@ -56,6 +60,10 @@ public class HomeActivity extends AppCompatActivity implements HomePresenter.Vie
     }
 
     @Override
+    protected Presenter bindPresenter() {
+        return mPresenter;
+    }
+
     public void configureView(ArrayList<Heroe> listHeroes) {
         mToolbar.setTitle(getString(R.string.home_activity_title));
         setSupportActionBar(mToolbar);
