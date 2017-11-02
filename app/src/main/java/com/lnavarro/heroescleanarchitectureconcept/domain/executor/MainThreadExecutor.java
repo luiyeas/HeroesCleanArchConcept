@@ -2,9 +2,6 @@ package com.lnavarro.heroescleanarchitectureconcept.domain.executor;
 
 import android.os.Handler;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-
 /**
  * Created by luis on 1/11/17.
  */
