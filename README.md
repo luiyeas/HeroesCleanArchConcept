@@ -6,7 +6,7 @@ This is a sample app that using the Uncle Bob's clean architecture approach, bas
 
 # Implementation
 I have used the following resources/libraries for this example app:
-- Retroti2 such Http client: http://square.github.io/retrofit/
+- Retrofit 2 such Http client: http://square.github.io/retrofit/
 - Butterknife such bind engine: http://jakewharton.github.io/butterknife/
 - Dagger 2 such Dependency Injection library: https://google.github.io/dagger/
 - RxAndroid such RxJava bindings: https://github.com/ReactiveX/RxAndroid
